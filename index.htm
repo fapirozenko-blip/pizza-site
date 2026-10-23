@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пиццерия "Вкусно и Точка"</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #fff8f0; color: #333; }
+        header { background-color: #d32f2f; color: white; padding: 20px 0; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { margin: 0; font-size: 2.5em; }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 20px; }
+        .hero { text-align: center; margin-bottom: 40px; }
+        .hero img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .hero h2 { color: #d32f2f; margin-top: 20px; }
+        .menu-section { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .menu-item { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 15px 0; align-items: center; }
+        .menu-item:last-child { border-bottom: none; }
+        .item-info h3 { margin: 0 0 5px 0; color: #333; }
+        .item-info p { margin: 0; color: #777; font-size: 0.9em; }
+        .price { font-weight: bold; font-size: 1.2em; color: #d32f2f; white-space: nowrap; margin-left: 20px; }
+        .contact-section { margin-top: 40px; text-align: center; background: #333; color: white; padding: 30px; border-radius: 15px; }
+        .contact-section h2 { color: #ffca28; }
+        footer { text-align: center; padding: 20px; margin-top: 40px; color: #777; font-size: 0.9em; }
+        @media (max-width: 600px) { .menu-item { flex-direction: column; align-items: flex-start; } .price { margin-left: 0; margin-top: 10px; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Пиццерия "Вкусно и Точка"</h1>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Вкусная пицца">
+            <h2>Самая вкусная пицца в городе!</h2>
+            <p>Готовим с любовью из свежих ингредиентов. Доставка от 30 минут.</p>
+        </div>
+
+        <div class="menu-section">
+            <h2 style="text-align: center; color: #d32f2f; margin-top: 0;">Наше Меню</h2>
+            
+            <div class="menu-item">
+                <div class="item-info">
+                    <h3>Маргарита</h3>
+                    <p>Классическая: томатный соус, моцарелла, базилик</p>
+                </div>
+                <div class="price">450 ₽</div>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-info">
+                    <h3>Пепперони</h3>
+                    <p>Пикантная колбаска, томатный соус, много сыра</p>
+                </div>
+                <div class="price">550 ₽</div>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-info">
+                    <h3>4 Сыра</h3>
+                    <p>Моцарелла, пармезан, дорблю, чеддер</p>
+                </div>
+                <div class="price">600 ₽</div>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h2>Как нас найти?</h2>
+            <p><strong>Телефон:</strong> +7 (999) 123-45-67</p>
+            <p><strong>Адрес:</strong> г. Москва, ул. Пиццевая, д. 1</p>
+            <p><strong>Часы работы:</strong> Ежедневно с 10:00 до 23:00</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Пиццерия. Все права защищены.
+    </footer>
+
+</body>
+</html>
