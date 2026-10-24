@@ -8,7 +8,7 @@ public_folder: "/images"
 collections:
   - name: "menu"
     label: "Меню (Блюда)"
-    file: "menu/index.json"
+    folder: "menu"
     format: "json"
     create: true
     fields:
