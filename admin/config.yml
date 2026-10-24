@@ -9,6 +9,7 @@ collections:
   - name: "menu"
     label: "Меню (Блюда)"
     folder: "menu"
+    format: "json"
     create: true
     fields:
       - { label: "Название блюда", name: "title", widget: "string" }
