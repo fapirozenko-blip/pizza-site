@@ -17,6 +17,7 @@
         .menu-item:last-child { border-bottom: none; }
         .item-info h3 { margin: 0 0 5px 0; color: #333; }
         .item-info p { margin: 0; color: #777; font-size: 0.9em; }
+        .item-img { width: 80px; height: 80px; object-fit: cover; border-radius: 10px; margin-right: 15px; }
         .price { font-weight: bold; font-size: 1.2em; color: #d32f2f; white-space: nowrap; margin-left: 20px; }
         .contact-section { margin-top: 40px; text-align: center; background: #333; color: white; padding: 30px; border-radius: 15px; }
         .contact-section h2 { color: #ffca28; }
@@ -39,29 +40,8 @@
 
         <div class="menu-section">
             <h2 style="text-align: center; color: #d32f2f; margin-top: 0;">Наше Меню</h2>
-            
-            <div class="menu-item">
-                <div class="item-info">
-                    <h3>Маргарита</h3>
-                    <p>Классическая: томатный соус, моцарелла, базилик</p>
-                </div>
-                <div class="price">450 ₽</div>
-            </div>
-
-            <div class="menu-item">
-                <div class="item-info">
-                    <h3>Пепперони</h3>
-                    <p>Пикантная колбаска, томатный соус, много сыра</p>
-                </div>
-                <div class="price">550 ₽</div>
-            </div>
-
-            <div class="menu-item">
-                <div class="item-info">
-                    <h3>4 Сыра</h3>
-                    <p>Моцарелла, пармезан, дорблю, чеддер</p>
-                </div>
-                <div class="price">600 ₽</div>
+            <div id="menu-container">
+                <p style="text-align: center; color: #777;">Загрузка меню...</p>
             </div>
         </div>
 
@@ -76,6 +56,58 @@
     <footer>
         &copy; 2026 Пиццерия. Все права защищены.
     </footer>
+
+    <script>
+        // Этот скрипт автоматически загружает блюда из админки
+        async function loadMenu() {
+            const container = document.getElementById('menu-container');
+            try {
+                // Запрашиваем список файлов из папки menu
+                const response = await fetch('/menu/index.json'); 
+                if (!response.ok) throw new Error('Нет файлов');
+                const data = await response.json();
+                
+                container.innerHTML = ''; // Очищаем надпись "Загрузка"
+
+                // Перебираем все блюда из админки
+                data.forEach(item => {
+                    const imgHtml = item.image ? `<img src="${item.image}" class="item-img" alt="${item.title}">` : '';
+                    const itemHtml = `
+                        <div class="menu-item">
+                            <div style="display: flex; align-items: center;">
+                                ${imgHtml}
+                                <div class="item-info">
+                                    <h3>${item.title}</h3>
+                                    <p>${item.description}</p>
+                                </div>
+                            </div>
+                            <div class="price">${item.price}</div>
+                        </div>
+                    `;
+                    container.innerHTML += itemHtml;
+                });
+            } catch (error) {
+                // Если в админке еще нет блюд, показываем те, что были по умолчанию
+                container.innerHTML = `
+                    <div class="menu-item">
+                        <div class="item-info"><h3>Маргарита</h3><p>Классическая: томатный соус, моцарелла, базилик</p></div>
+                        <div class="price">450 ₽</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-info"><h3>Пепперони</h3><p>Пикантная колбаска, томатный соус, много сыра</p></div>
+                        <div class="price">550 ₽</div>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-info"><h3>4 Сыра</h3><p>Моцарелла, пармезан, дорблю, чеддер</p></div>
+                        <div class="price">600 ₽</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Запускаем загрузку при открытии сайта
+        loadMenu();
+    </script>
 
 </body>
 </html>
