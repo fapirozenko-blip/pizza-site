@@ -58,18 +58,25 @@
     </footer>
 
     <script>
-        // Этот скрипт автоматически загружает блюда из админки
         async function loadMenu() {
             const container = document.getElementById('menu-container');
             try {
-                // Запрашиваем список файлов из папки menu
-                const response = await fetch('/menu/index.json'); 
+                // 1. Получаем список всех файлов в папке menu через GitHub API
+                // ВАЖНО: Проверьте, что ваш логин и имя репозитория совпадают!
+                const response = await fetch('https://api.github.com/repos/fapirozenko-blip/pizza-site/contents/menu');
                 if (!response.ok) throw new Error('Нет файлов');
-                const data = await response.json();
-                
+                const files = await response.json();
+
+                // 2. Фильтруем только json-файлы (игнорируем служебные)
+                const jsonFiles = files.filter(file => file.name.endsWith('.json'));
+
+                // 3. Загружаем каждый файл и собираем данные
+                const promises = jsonFiles.map(file => fetch(file.download_url).then(res => res.json()));
+                const data = await Promise.all(promises);
+
                 container.innerHTML = ''; // Очищаем надпись "Загрузка"
 
-                // Перебираем все блюда из админки
+                // 4. Выводим блюда на сайт
                 data.forEach(item => {
                     const imgHtml = item.image ? `<img src="${item.image}" class="item-img" alt="${item.title}">` : '';
                     const itemHtml = `
@@ -87,25 +94,11 @@
                     container.innerHTML += itemHtml;
                 });
             } catch (error) {
-                // Если в админке еще нет блюд, показываем те, что были по умолчанию
-                container.innerHTML = `
-                    <div class="menu-item">
-                        <div class="item-info"><h3>Маргарита</h3><p>Классическая: томатный соус, моцарелла, базилик</p></div>
-                        <div class="price">450 ₽</div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info"><h3>Пепперони</h3><p>Пикантная колбаска, томатный соус, много сыра</p></div>
-                        <div class="price">550 ₽</div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info"><h3>4 Сыра</h3><p>Моцарелла, пармезан, дорблю, чеддер</p></div>
-                        <div class="price">600 ₽</div>
-                    </div>
-                `;
+                // Если ничего не загрузилось, показываем заглушку
+                container.innerHTML = `<p style="text-align: center; color: #777;">Меню временно обновляется...</p>`;
             }
         }
 
-        // Запускаем загрузку при открытии сайта
         loadMenu();
     </script>
 
